@@ -24,12 +24,12 @@ end
 # p my_min2(list)  # =>  -5
 # puts (Time.now - start_time)
 
-# time complexity O()
+# time complexity O(n^3)
 def largest_contiguous_sub_sum(arr)
   subarrs = []                        #O(1)
 
   (0...arr.length).each do |idx|      #O(n)
-    (idx...arr.length).each do |jdx|  #O(logn)
+    (idx...arr.length).each do |jdx|  #O(n/2)
       subarrs << arr[idx..jdx]        #O(n)
     end
   end          
@@ -41,5 +41,43 @@ def largest_contiguous_sub_sum(arr)
   subarrs.max                         #O(n)
 end 
 
-list = [5, 3, -7]
-p largest_contiguous_sub_sum(list)
+def largest_contiguous_sub_sum2(arr)
+
+  sum = arr.first
+
+  (1...arr.length).each do |idx|
+    if sum < 0 && arr[idx] > sum
+      sum = arr[idx]
+    else 
+      sum += arr[idx] if arr[idx] > 0
+    end
+  end 
+  sum
+end
+
+def largest_contiguous_sub_sum3(arr)
+
+  stored_sum = arr[0]
+  sum = arr[0]
+
+  (1...arr.length).each do |idx|
+    sum = arr[idx] if sum < 0 && arr[idx] > sum
+    temp = sum + arr[idx]
+    if temp <= 0 && temp > stored_sum 
+      stored_sum = sum
+      sum = 0 
+    end 
+  end 
+  if stored_sum < sum
+    sum
+  else
+    stored_sum
+  end
+end 
+
+list1 = [5, 3, -7]
+list2 = [2, 3, -6, 7, -6, 7]
+list3 = [-5, -1, -3]
+p largest_contiguous_sub_sum3(list1)
+p largest_contiguous_sub_sum3(list2)
+p largest_contiguous_sub_sum3(list3)
