@@ -58,21 +58,18 @@ end
 def largest_contiguous_sub_sum3(arr)
 
   stored_sum = arr[0]
-  sum = arr[0]
 
   (1...arr.length).each do |idx|
-    sum = arr[idx] if sum < 0 && arr[idx] > sum
-    temp = sum + arr[idx]
-    if temp <= 0 && temp > stored_sum 
-      stored_sum = sum
-      sum = 0 
+    next if stored sum + ele < stored sum 
+    if ele > stored sum it yes stored sum = ele 
+    temp = stored_sum + arr[idx]
+    next if arr[idx] < temp > stored_sum 
+      stored_sum = temp
+    else
+      stored_sum = arr[idx]
     end 
   end 
-  if stored_sum < sum
-    sum
-  else
-    stored_sum
-  end
+  stored_sum
 end 
 
 list1 = [5, 3, -7]
